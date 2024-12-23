@@ -1,0 +1,98 @@
+(DenseTNT) zwt@412:~/thesis/DenseTNT/DenseTNT-argoverse2$ bash zwt/train.sh
+{'add_prefix': None, 'agent_type': None, 'argoverse': True, 'argoverse2': True, 'attention_decay': False, 'autoregression': None, 'core_num': 16, 'cuda_visible_device_num': None, 'data_dir': '/media/zwt/新加卷/Argrse_2/train/', 'data_dir_for_val': 'data/val', 'debug': False, 'distributed_training': 1, 'do_eval': False, 'do_test': False, 'do_train': True, 'eval_batch_size': 64, 'eval_params': [], 'future_frame_num': 60, 'future_test_frame_num': 16, 'global_graph_depth': 1, 'gpu_split': 0, 'hidden_dropout_prob': 0.1, 'hidden_size': 128, 'initializer_range': 0.02, 'inter_agent_types': None, 'learning_rate': 0.001, 'log_dir': 'argoverse2.densetnt.1', 'lstm': False, 'master_port': '12355', 'max_distance': 50.0, 'method_span': [0, 1], 'mode_num': 6, 'model_recover_path': None, 'model_save_dir': 'argoverse2.densetnt.1/model_save', 'multi': None, 'nms_threshold': None, 'no_agents': False, 'no_cuda': False, 'no_sub_graph': False, 'not_use_api': False, 'num_train_epochs': 16.0, 'nuscenes': False, 'old_version': False, 'other_params': {'semantic_lane': True, 'direction': True, 'l1_loss': True, 'goals_2D': True, 'enhance_global_graph': True, 'subdivide': True, 'goal_scoring': True, 'laneGCN': True, 'point_sub_graph': True, 'lane_scoring': True, 'complete_traj': True, 'complete_traj-3': True}, 'output_dir': 'argoverse2.densetnt.1', 'placeholder': 0.0, 'reuse_temp_file': False, 'seed': 42, 'single_agent': True, 'stage_one_K': None, 'sub_graph_batch_size': 8000, 'sub_graph_depth': 3, 'temp_file_dir': 'argoverse2.densetnt.1/temp_file', 'train_batch_size': 64, 'train_extra': False, 'train_params': [], 'use_centerline': True, 'use_map': True, 'visualize': False, 'waymo': False, 'weight_decay': 0.01}
+
+11/22/2024 22:16:58 - INFO - __main__ -   ***** args *****
+output_dir argoverse2.densetnt.1
+other_params ['semantic_lane', 'direction', 'l1_loss', 'goals_2D', 'enhance_global_graph', 'subdivide', 'goal_scoring', 'laneGCN', 'point_sub_graph', 'lane_scoring', 'complete_traj', 'complete_traj-3']
+11/22/2024 22:16:58 - INFO - __main__ -   device: cuda
+Finish init
+Loading dataset ['/media/zwt/新加卷/Argoverse_2/train/']
+Init loading dataset
+['/media/zwt/新加卷/Argoverse_2/train/0001fe2b-a3c8-4cdf-a712-6b65a17ca316', '/media/zwt/新加卷/Argoverse_2/train/0002cd4c-d011-4f89-84e4-5a042007f034', '/media/zwt/新加卷/Argoverse_2/train/00037cc8-2b41-49cb-a7818dff', '/media/zwt/新加卷/Argoverse_2/train/000410c1-84d8-43a6-b6e8-34616cc1543f', '/media/zwt/新加卷/Argoverse_2/train/000640fa-f099-4148-802c-68d64843a3bd'] ['/media/zwt/新加卷/Argoverse_2/train/d33c22ec-0e5c-43326d26be00d', '/media/zwt/新加卷/Argoverse_2/train/d33c32fe-b8a1-4974-ae13-2f49ce074158', '/media/zwt/新加卷/Argoverse_2/train/d33cba94-92ee-4338-b427-aa3edba39be0', '/media/zwt/新加卷/Argoverse_2/train/d33cddad-68c2a-122c68e402f4', '/media/zwt/新加卷/Argoverse_2/train/d33e5c6e-98ad-4d86-907f-9fd6e81d4d4b']
+  0%|                                                                                                                                                                                      | 0/54931 [00:00<?, ?it/s]54931
+11111111111
+ 35%|██████████████████████████████████████████████████████████▊                                                                                                              | 19136/54931 [02:37<04:29, 132.59it/s]/media/zwt/新加卷/Argoverse_2/train/e0f364f3-f6ed-403d-8de0-dcf688bcd7b2/scenario_e0f364f3-f6ed-403d-8de0-dcf688bcd7b2.parquet
+ 50%|████████████████████████████████████████████████████████████████████████████████████▋                                                                                    | 27523/54931 [03:45<03:31, 129.52it/s]/media/zwt/新加卷/Argoverse_2/train/d68c9de3-0353-43ab-855a-1321fa6e1fee/scenario_d68c9de3-0353-43ab-855a-1321fa6e1fee.parquet
+ 57%|████████████████████████████████████████████████████████████████████████████████████████████████▊                                                                        | 31457/54931 [04:18<03:20, 117.10it/s]/media/zwt/新加卷/Argoverse_2/train/5570044d-d262-4499-be52-e18cac04bf65/scenario_5570044d-d262-4499-be52-e18cac04bf65.parquet
+ 76%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████                                        | 41967/54931 [05:48<01:50, 117.49it/s]/media/zwt/新加卷/Argoverse_2/train/c2558977-1397-481e-924d-04de90fa739a/scenario_c2558977-1397-481e-924d-04de90fa739a.parquet
+ 93%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▍           | 51184/54931 [07:10<00:31, 119.93it/s]/media/zwt/新加卷/Argoverse_2/train/8be733a1-ba42-4ea7-81ee-b3cec8db2464/scenario_8be733a1-ba42-4ea7-81ee-b3cec8db2464.parquet
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 54931/54931 [07:46<00:00, 108.67it/s]2222222222
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 54931/54931 [07:46<00:00, 117.82it/s]
+54931
+333333333333333333
+ 34%|████████████████████████████████████████████████████████▌                                                                                                              | 18589/54931 [00:01<00:02, 12282.90it/s]Process Process-9:
+Traceback (most recent call last):
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 752, in calc_ex_list
+    instance = argoverse2_get_instance(args, file)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 390, in argoverse2_get_instance
+    scenario = argoverse2_load_scenario(instance_dir)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 373, in argoverse2_load_scenario
+    return scenario_serialization.load_argoverse_scenario_parquet(file_path)  # 返回的type是ArgoverseScenario
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/site-packages/av2/datasets/motion_forecasting/scenario_serialization.py", line 61, in load_argoverse_scenario_parquet
+    tracks = _load_tracks_from_tabular_format(tracks_df)
+UnboundLocalError: local variable 'tracks_df' referenced before assignment
+ 51%|████████████████████████████████████████████████████████████████████████████████████▍                                                                                  | 27778/54931 [00:02<00:02, 11131.08it/s]Process Process-15:
+Traceback (most recent call last):
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 752, in calc_ex_list
+    instance = argoverse2_get_instance(args, file)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 390, in argoverse2_get_instance
+    scenario = argoverse2_load_scenario(instance_dir)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 373, in argoverse2_load_scenario
+    return scenario_serialization.load_argoverse_scenario_parquet(file_path)  # 返回的type是ArgoverseScenario
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/site-packages/av2/datasets/motion_forecasting/scenario_serialization.py", line 61, in load_argoverse_scenario_parquet
+    tracks = _load_tracks_from_tabular_format(tracks_df)
+UnboundLocalError: local variable 'tracks_df' referenced before assignment
+ 55%|███████████████████████████████████████████████████████████████████████████████████████████▎                                                                           | 30023/54931 [00:02<00:02, 10869.99it/s]Process Process-3:
+Traceback (most recent call last):
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 752, in calc_ex_list
+    instance = argoverse2_get_instance(args, file)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 390, in argoverse2_get_instance
+    scenario = argoverse2_load_scenario(instance_dir)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 373, in argoverse2_load_scenario
+    return scenario_serialization.load_argoverse_scenario_parquet(file_path)  # 返回的type是ArgoverseScenario
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/site-packages/av2/datasets/motion_forecasting/scenario_serialization.py", line 61, in load_argoverse_scenario_parquet
+    tracks = _load_tracks_from_tabular_format(tracks_df)
+UnboundLocalError: local variable 'tracks_df' referenced before assignment
+ 76%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▋                                        | 41685/54931 [00:03<00:01, 10114.58it/s]Process Process-16:
+Traceback (most recent call last):
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 752, in calc_ex_list
+    instance = argoverse2_get_instance(args, file)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 390, in argoverse2_get_instance
+    scenario = argoverse2_load_scenario(instance_dir)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 373, in argoverse2_load_scenario
+    return scenario_serialization.load_argoverse_scenario_parquet(file_path)  # 返回的type是ArgoverseScenario
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/site-packages/av2/datasets/motion_forecasting/scenario_serialization.py", line 61, in load_argoverse_scenario_parquet
+    tracks = _load_tracks_from_tabular_format(tracks_df)
+UnboundLocalError: local variable 'tracks_df' referenced before assignment
+ 91%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▋               | 49903/54931 [00:04<00:00, 10322.76it/s]Process Process-7:
+Traceback (most recent call last):
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 752, in calc_ex_list
+    instance = argoverse2_get_instance(args, file)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 390, in argoverse2_get_instance
+    scenario = argoverse2_load_scenario(instance_dir)
+  File "/home/zwt/thesis/DenseTNT/DenseTNT-argoverse2/src/dataset_argoverse.py", line 373, in argoverse2_load_scenario
+    return scenario_serialization.load_argoverse_scenario_parquet(file_path)  # 返回的type是ArgoverseScenario
+  File "/home/zwt/anaconda3/envs/DenseTNT/lib/python3.8/site-packages/av2/datasets/motion_forecasting/scenario_serialization.py", line 61, in load_argoverse_scenario_parquet
+    tracks = _load_tracks_from_tabular_format(tracks_df)
+UnboundLocalError: local variable 'tracks_df' referenced before assignment
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▉| 54926/54931 [00:23<00:00, 9912.10it/s]

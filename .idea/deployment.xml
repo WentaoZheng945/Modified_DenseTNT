@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="root@connect.nmb1.seetacloud.com:56131 password (2)" remoteFilesAllowedToDisappearOnAutoupload="false" autoUploadExternalChanges="true">
+    <serverData>
+      <paths name="3080ti*8">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/zwt/DenseTNT" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="root@connect.nmb1.seetacloud.com:56131 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_530" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="root@connect.nmb1.seetacloud.com:56131 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/zwt/DenseTNT" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
