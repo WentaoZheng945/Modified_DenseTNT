@@ -636,11 +636,13 @@ def argoverse2_get_instance_eval(args: utils.Args, instance_dir):
 
     to_predict_track = {}
     for track in scenario.tracks:
-        if track.object_type in ['PEDESTRIAN', 'MOTORCYCLIST', 'CYCLIST', 'BUS', 'STATIC', 'BACKGROUND', 'CONSTRUCTION', 'RIDERLESS_BICYCLE', 'UNKNOWN']:
-            pass
+        if track.object_type in ['pedestrian', 'motorcyclist', 'cyclist', 'bus', 'static', 'background', 'construction', 'riderless_bicycle', 'unknown']:
+            continue
         if track.category == data_schema.TrackCategory.SCORED_TRACK:
+            # print(track.object_type)
             to_predict_track[track.track_id] = {}
         elif track.category == data_schema.TrackCategory.FOCAL_TRACK:
+            # print(track.object_type)
             to_predict_track[track.track_id] = {}
         else:
             pass
@@ -1278,7 +1280,7 @@ class DatasetEval(torch.utils.data.Dataset):
                     else:
                         files.extend([os.path.join(each_dir, file) for file in cur_files if
                                       file.endswith("csv") and not file.startswith('.')])
-                files = files[5000:10000]
+                files = files[:100]
                 # print(files[:5], files[-5:])
                 # pickle_file = open(os.path.join(args.temp_file_dir, 'OR'), 'rb')
                 # useful_name = pickle.load(pickle_file)

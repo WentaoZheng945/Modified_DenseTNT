@@ -16,9 +16,9 @@ origin_angle = None
 traj_last = None
 visualize_num = 0
 
-def get_L2_dis(full_trajectory):
+def is_stationary_vehicle(full_trajectory):
     dis = np.sqrt((full_trajectory[-1][0] - full_trajectory[0][0])**2+(full_trajectory[-1][1] - full_trajectory[0][1])**2)
-    if dis > 4:
+    if dis < 5:
         return True
     else:
         return False
@@ -223,9 +223,27 @@ def draw_prediction(ax, prediction, add_end=False):
     min_x, min_y = float('inf'), float('inf')
     target_agent_color, target_agent_edge_color = '#4bad34', '#c5dfb3'  # 绿色
     for track_id, track in prediction.items():
+        # 计算朝向
+        first_five_elements = track['vis_post_past_trajs'][:5]
+        first_five_headings = np.zeros(4)
+        for i in range(4):
+            first_five_headings[i] = np.arctan2(first_five_elements[i+1][1] - first_five_elements[i][1],
+                                                first_five_elements[i+1][0] - first_five_elements[i][0])
+        heading = np.mean(first_five_headings)
+        # 计算形状
+        if track['category'] == 'vehicle':
+            vehicle_box = calc_polygon_point_xy(track['vis_post_past_trajs'][0][0], track['vis_post_past_trajs'][0][1], heading, width=1.5, length=2.5)
+        else:
+            raise ValueError('Unknown category: {}'.format(track['category']))
+
+        # 绘制车辆矩形
+        rectangle = patches.Polygon(vehicle_box, closed=True, facecolor=target_agent_color, edgecolor=target_agent_edge_color,
+                                    linewidth=2, alpha=1.0, zorder=1)
+        ax.add_patch(rectangle)
+
         # 绘制历史轨迹
         ax.plot(track['vis_post_past_trajs'][:, 0], track['vis_post_past_trajs'][:, 1], linestyle="-", color='darkblue', marker='o',
-                alpha=1, linewidth=2, markersize=3, zorder=1)
+                alpha=1, linewidth=2, markersize=3, zorder=2)
         # 统计一下绘图范围
         max_x = max(max_x, max(track['vis_post_past_trajs'][:, 0]))
         max_y = max(max_y, max(track['vis_post_past_trajs'][:, 1]))
@@ -234,7 +252,7 @@ def draw_prediction(ax, prediction, add_end=False):
 
         # 绘制预测车真实轨迹
         function1 = ax.plot(track['vis_post_labels'][:, 0], track['vis_post_labels'][:, 1], linestyle="-", color=target_agent_color, marker='o',
-                            alpha=1, linewidth=2, markersize=3, zorder=1, label='Ground truth trajectory')
+                            alpha=1, linewidth=2, markersize=3, zorder=2, label='Ground truth trajectory')
         # 统计一下绘图范围
         max_x = max(max_x, max(track['vis_post_labels'][:, 0]))
         max_y = max(max_y, max(track['vis_post_labels'][:, 1]))
@@ -243,7 +261,7 @@ def draw_prediction(ax, prediction, add_end=False):
         # 绘制终点特殊标记
         if add_end:
             ax.plot(track['vis_post_labels'][-1, 0], track['vis_post_labels'][-1, 1], markersize=15*marker_size_scale,
-                    color=target_agent_color, marker='*', markeredgecolor='black', zorder=2)
+                    color=target_agent_color, marker='*', markeredgecolor='black', zorder=1)
 
         # 绘制预测轨迹
         for each in track['vis_post_predict_trajs']:
@@ -252,7 +270,7 @@ def draw_prediction(ax, prediction, add_end=False):
 
             if add_end:
                 ax.plot(each[-1, 0], each[-1, 1], markersize=15*marker_size_scale,
-                        color='darkorange', marker='*', markeredgecolor='black', zorder=2)
+                        color='darkorange', marker='*', markeredgecolor='black', zorder=1)
         # 统计一下绘图范围
         max_x = max(max_x, np.max(track['vis_post_predict_trajs'][:, :, 0]))
         max_y = max(max_y, np.max(track['vis_post_predict_trajs'][:, :, 1]))
@@ -264,10 +282,13 @@ def draw_background(ax, background, filter=True):
     background_agent_color, background_agent_edge_color = '#0d79e7', '#bcd6ed' # blue
     for track_id, track in background.items():
         if filter:
-            # filter从两个维度开始，一个是去除无效类型， 一个是去除时间小于0.5s
+            # filter从三个维度开始，一个是去除无效类型， 一个是去除时间小于0.5s,
+            # 最后是去除车道外静止车辆(目前做法是计算背景车最后一帧和第一帧坐标的距离小于5m TODO 未来考虑和OR指标一样使用原始地图的raster)
             if track['category'] in ['static', 'background', 'construction', 'riderless_bicycle', 'unknown']:
                 continue
             if track['trajs'].shape[0] < 5:
+                continue
+            if is_stationary_vehicle(track['trajs']):
                 continue
         first_five_elements = track['trajs'][:5]
         first_five_heading = np.zeros(4)
@@ -291,7 +312,7 @@ def draw_background(ax, background, filter=True):
             raise ValueError('Unknown category: {}'.format(track['category']))
 
         # 绘制车辆矩形
-        rectangle = patches.Polygon(vehicle_box, closed=True, facecolor=background_agent_color, edgecolor=background_agent_edge_color, linewidth=2, alpha=1.0, zorder=2)
+        rectangle = patches.Polygon(vehicle_box, closed=True, facecolor=background_agent_color, edgecolor=background_agent_edge_color, linewidth=2, alpha=1.0, zorder=1)
         ax.add_patch(rectangle)
         # ax.text(track[0][0], track[0][1], f"{track['category']}", color='black', fontsize=10, ha='center', va='center')
 

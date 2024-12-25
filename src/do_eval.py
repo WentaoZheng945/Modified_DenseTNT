@@ -155,7 +155,7 @@ def do_eval(args):
         pickle_file = open(os.path.join('/root/autodl-tmp/data/preprocess_data/', 'predict_result'), 'wb')
     else:
         # pickle_file = open(os.path.join(args.temp_file_dir, 'full_info'), 'wb')
-        pickle_file = open(os.path.join('/root/autodl-tmp/data/preprocess_data/', 'full_info2'), 'wb')
+        pickle_file = open(os.path.join('/root/autodl-tmp/data/preprocess_data/', 'full_info_test'), 'wb')
     pickle.dump(record, pickle_file)
     pickle_file.close()
 
