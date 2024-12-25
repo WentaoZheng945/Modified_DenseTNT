@@ -39,6 +39,9 @@ def add_argument(parser):
     parser.add_argument("-e", "--do_eval",
                         action='store_true',
                         help="Whether to run eval on the dev set.")  # 是否在开发集上执行评估 default:False
+    parser.add_argument("--eval_single",
+                        action='store_true',
+                        help="run eval on a single vehicle.")
     parser.add_argument("--do_test",
                         action='store_true')  # 是否执行测试 default: False
     parser.add_argument("--data_dir",
@@ -139,6 +142,8 @@ def add_argument(parser):
                         type=int)  # 核心数量 16
     parser.add_argument("--visualize",
                         action='store_true')  # 是否可视化 False
+    parser.add_argument("--visualize_post",
+                        action='store_true')
     parser.add_argument("--visualize_num",
                         default=50,
                         type=int)  # 可视化张数
@@ -220,6 +225,7 @@ class Args:
     log_dir = None
     learning_rate = None
     do_eval = None
+    eval_single = None
     hidden_size = None
     sub_graph_depth = None
     global_graph_depth = None
@@ -243,6 +249,7 @@ class Args:
     not_use_api = None
     core_num = None
     visualize = None
+    visualize_post = None
     train_extra = None
     hidden_dropout_prob = None
     use_centerline = None
@@ -797,13 +804,13 @@ def visualize_goals_2D(mapping, goals_2D, scores: np.ndarray, future_frame_num, 
             if traj['category'].name == 'VEHICLE':
                 vehicle_box = calc_polygon_point_xy(full_trajectory[0][0], full_trajectory[0][1], heading, width=1.5, length=2.5)
             elif traj['category'].name == "PEDESTRIAN":
-                vehicle_box = calc_polygon_point_xy(full_trajectory[1][0], full_trajectory[1][1], heading, width=0.2, length=0.2)
+                vehicle_box = calc_polygon_point_xy(full_trajectory[0][0], full_trajectory[0][1], heading, width=0.2, length=0.2)
             elif traj["category"].name == "MOTORCYCLIST":
-                vehicle_box = calc_polygon_point_xy(full_trajectory[1][0], full_trajectory[1][1], heading, width=0.5, length=1)
+                vehicle_box = calc_polygon_point_xy(full_trajectory[0][0], full_trajectory[0][1], heading, width=0.5, length=1)
             elif traj["category"].name == "CYCLIST":
-                vehicle_box = calc_polygon_point_xy(full_trajectory[1][0], full_trajectory[1][1], heading, width=0.5, length=1)
+                vehicle_box = calc_polygon_point_xy(full_trajectory[0][0], full_trajectory[0][1], heading, width=0.5, length=1)
             elif traj["category"].name == "BUS":
-                vehicle_box = calc_polygon_point_xy(full_trajectory[1][0], full_trajectory[1][1], heading, width=2, length=6)
+                vehicle_box = calc_polygon_point_xy(full_trajectory[0][0], full_trajectory[0][1], heading, width=2, length=6)
             else:
                 # print("\033[31m", traj['category'].name,  "\033[0m")
                 continue

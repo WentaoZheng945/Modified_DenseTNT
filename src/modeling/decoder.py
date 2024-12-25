@@ -286,6 +286,11 @@ class Decoder(nn.Module):
             mapping[i]['vis.scores'] = np.array(scores.tolist())
             mapping[i]['vis.labels'] = gt_points
             mapping[i]['vis.labels_is_valid'] = labels_is_valid[i]
+        if args.visualize_post:
+            mapping[i]['vis_post.goals_2D'] = goals_2D
+            mapping[i]['vis_post.scores'] = np.array(scores.tolist())
+            mapping[i]['vis_post.labels'] = gt_points
+            mapping[i]['vis_post.labels_is_valid'] = labels_is_valid[i]
 
         if 'set_predict' in args.other_params:
             self.run_set_predict(goals_2D, scores, mapping, device, loss, i)
@@ -334,6 +339,8 @@ class Decoder(nn.Module):
                 final_idx = mapping[i].get('final_idx', -1)
                 predict_trajs[:, final_idx, :] = pred_goals_batch[i]  # 最后一帧换成终点
                 mapping[i]['vis.predict_trajs'] = predict_trajs.copy()
+                if args.visualize_post:
+                    mapping[i]['vis_post.predict_trajs'] = predict_trajs.copy()
 
                 if args.argoverse:
                     for each in predict_trajs:

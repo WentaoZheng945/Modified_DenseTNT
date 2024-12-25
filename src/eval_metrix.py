@@ -164,5 +164,5 @@ if __name__ == '__main__':
     data_dir = [r'/root/autodl-tmp/data/val']
     temp_file_dir = r'/root/zwt/DenseTNT/argoverse2.densetnt.1/temp_file/'
     # data_dir = [r'/media/zwt/新加卷/Argoverse_2/val']
-    # eval_OR(data_dir, temp_file_dir)
-    calc_abnormal_value(temp_file_dir)
+    eval_OR(data_dir, temp_file_dir)
+    # calc_abnormal_value(temp_file_dir)
