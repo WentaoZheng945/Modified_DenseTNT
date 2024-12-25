@@ -72,8 +72,9 @@ ex_list为一个list，每个元素为一个场景，数据结构为dict
     eval：
         file_name:场景名
         track_id:轨迹id
-        gt_future_track:真实未来轨迹
-        pr_future_track:预测未来轨迹
+        full_trajectory:所有轨迹key为轨迹id，value为dict(heading:, category:, past:dict(key为时间，value为[x, y]), future:dict)
+        # gt_future_track:真实未来轨迹
+        # pr_future_track:预测未来轨迹
 """
 # TODO 重写argoverse2_get_instance_eval函数，使其兼容上面的内容
 # TODO 记录预测后的轨迹

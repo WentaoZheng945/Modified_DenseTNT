@@ -471,7 +471,7 @@ def get_single_agent_instance(track_id, scenario, argoverse2_map, to_predict_tra
 
         # 记录所有车辆的全时刻轨迹(局部坐标)，用于可视化
         trajectory[track.track_id].update(dict(
-            heading=track.object_states[0].heading - angle,
+            heading=track.object_states[0].heading,
             category=track.object_type,
             past=past_dict,
             future=future_dict,
@@ -651,7 +651,8 @@ def argoverse2_get_instance_eval(args: utils.Args, instance_dir):
     for track_id in to_predict_track.keys():
         get_single_agent_instance(track_id, scenario, argoverse2_map, to_predict_track, args, file_name)
 
-    return list(to_predict_track.values())
+    # TODO 该场景没有需要预测的车
+    return list(to_predict_track.values()) if list(to_predict_track.values()) != [] else None
 
 
 def argoverse2_get_instance(args: utils.Args, instance_dir):
@@ -1072,9 +1073,9 @@ class Dataset(torch.utils.data.Dataset):
             else:
                 assert False
 
-            # pickle_file = open(os.path.join(args.temp_file_dir, get_name('ex_list')), 'wb')
-            # pickle.dump(self.ex_list, pickle_file)
-            # pickle_file.close()
+            pickle_file = open(os.path.join(args.temp_file_dir, get_name('ex_list')), 'wb')
+            pickle.dump(self.ex_list, pickle_file)
+            pickle_file.close()
         assert len(self.ex_list) > 0
         if to_screen:
             print("valid data size is", len(self.ex_list))
@@ -1277,7 +1278,7 @@ class DatasetEval(torch.utils.data.Dataset):
                     else:
                         files.extend([os.path.join(each_dir, file) for file in cur_files if
                                       file.endswith("csv") and not file.startswith('.')])
-                files = files
+                files = files[5000:10000]
                 # print(files[:5], files[-5:])
                 # pickle_file = open(os.path.join(args.temp_file_dir, 'OR'), 'rb')
                 # useful_name = pickle.load(pickle_file)

@@ -57,7 +57,11 @@ def do_eval(args):
     print("Loading Evalute Dataset", args.data_dir)
     if args.argoverse:
         from dataset_argoverse import Dataset,DatasetEval
-    eval_dataset = DatasetEval(args, args.eval_batch_size)
+    if args.eval_single:
+        eval_dataset = Dataset(args, args.eval_batch_size)
+    else:
+        eval_dataset = DatasetEval(args, args.eval_batch_size)
+        print('==========================')
     eval_sampler = SequentialSampler(eval_dataset)  # 顺序遍历，不需要分布式训练
     eval_dataloader = torch.utils.data.DataLoader(eval_dataset, batch_size=args.eval_batch_size,
                                                   sampler=eval_sampler,
@@ -90,7 +94,11 @@ def do_eval(args):
         metrics = utils.PredictionMetrics()
 
     argo_pred = structs.ArgoPred()
-    record = {}
+    if args.eval_single:
+        record = {}
+    else:
+        record = {}
+
 
     for step, batch in enumerate(iter_bar):
         pred_trajectory, pred_score, _ = model(batch, device)  # pre_traject为ndarray，shape为(batch_size, 6, 60, 2) pred_score为ndarray, shape为(batch_size, 6)
@@ -108,7 +116,11 @@ def do_eval(args):
                     import compute_ade, compute_fde, compute_brier_fde
 
                 # 记录预测的轨迹
-                record[batch[i]['file_name']] = pred_trajectory[i]
+                # record[batch[i]['file_name']] = pred_trajectory[i]
+                if args.eval_single:
+                    record[batch[i]['file_name']] = pred_trajectory[i]
+                else:
+                    record[step*args.eval_batch_size+i] = batch[i]
 
                 forecasted_trajectories = pred_trajectory[i][:, :, :]
                 gt_trajectory = mapping[i]['gt_trajectory_global_coordinates'][:, :]
@@ -138,7 +150,12 @@ def do_eval(args):
 
     # 记录当前结果
     import pickle
-    pickle_file = open(os.path.join(args.temp_file_dir, 'predict_result'), 'wb')
+    if args.eval_single:
+        # pickle_file = open(os.path.join(args.temp_file_dir, 'predict_result'), 'wb')
+        pickle_file = open(os.path.join('/root/autodl-tmp/data/preprocess_data/', 'predict_result'), 'wb')
+    else:
+        # pickle_file = open(os.path.join(args.temp_file_dir, 'full_info'), 'wb')
+        pickle_file = open(os.path.join('/root/autodl-tmp/data/preprocess_data/', 'full_info2'), 'wb')
     pickle.dump(record, pickle_file)
     pickle_file.close()
 
