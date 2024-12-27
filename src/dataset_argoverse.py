@@ -1280,7 +1280,7 @@ class DatasetEval(torch.utils.data.Dataset):
                     else:
                         files.extend([os.path.join(each_dir, file) for file in cur_files if
                                       file.endswith("csv") and not file.startswith('.')])
-                files = files[:100]
+                files = files[20000:]
                 # print(files[:5], files[-5:])
                 # pickle_file = open(os.path.join(args.temp_file_dir, 'OR'), 'rb')
                 # useful_name = pickle.load(pickle_file)

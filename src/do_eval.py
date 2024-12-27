@@ -61,7 +61,6 @@ def do_eval(args):
         eval_dataset = Dataset(args, args.eval_batch_size)
     else:
         eval_dataset = DatasetEval(args, args.eval_batch_size)
-        print('==========================')
     eval_sampler = SequentialSampler(eval_dataset)  # 顺序遍历，不需要分布式训练
     eval_dataloader = torch.utils.data.DataLoader(eval_dataset, batch_size=args.eval_batch_size,
                                                   sampler=eval_sampler,
@@ -155,7 +154,7 @@ def do_eval(args):
         pickle_file = open(os.path.join('/root/autodl-tmp/data/preprocess_data/', 'predict_result'), 'wb')
     else:
         # pickle_file = open(os.path.join(args.temp_file_dir, 'full_info'), 'wb')
-        pickle_file = open(os.path.join('/root/autodl-tmp/data/preprocess_data/', 'full_info_test'), 'wb')
+        pickle_file = open(os.path.join('/root/autodl-tmp/data/preprocess_data/', 'full_info5'), 'wb')
     pickle.dump(record, pickle_file)
     pickle_file.close()
 
